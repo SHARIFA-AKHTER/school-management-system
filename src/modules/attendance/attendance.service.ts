@@ -1,5 +1,5 @@
-import { prisma } from '../../lib/prisma.js';
-import { IAttendance } from './attendance.interface.js';
+import { prisma } from "../../lib/prisma.js";
+import { IAttendance } from "./attendance.interface.js";
 
 const createAttendance = async (data: IAttendance) => {
 

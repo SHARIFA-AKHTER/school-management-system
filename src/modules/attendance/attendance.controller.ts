@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { AttendanceService } from './attendance.service.js';
 import catchAsync from '../../utils/catchAsync.js';
+import { AttendanceService } from './attendance.service.js';
 
 const createAttendance = catchAsync(async (req: Request, res: Response) => {
   const result = await AttendanceService.createAttendance(req.body);

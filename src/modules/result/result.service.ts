@@ -1,5 +1,6 @@
-import { prisma } from '../../lib/prisma.js';
-import { IResult } from './result.interface.js';
+import { prisma } from "../../lib/prisma.js";
+import { IResult } from "./result.interface.js";
+
 
 const createResult = async (data: IResult) => {
   const result = await prisma.result.create({

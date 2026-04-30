@@ -1,5 +1,6 @@
-import { prisma } from "../../lib/prisma";
-import { ISubject } from "./subject.interface";
+import { prisma } from "../../lib/prisma.js";
+import { ISubject } from "./subject.interface.js";
+
 
 const createSubject = async (data: ISubject)=>{
     const result = await prisma.subject.create({

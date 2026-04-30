@@ -1,7 +1,7 @@
 import express from 'express';
-import { validateRequest } from '../../middlewares/validate.middleware.js';
-import { AuthValidation } from './auth.validation.js';
 import { AuthController } from './auth.controller.js';
+
+
 
 
 

@@ -1,7 +1,8 @@
 import express from "express";
-import { AttendanceController } from "./attendance.controller.js";
 import { validateRequest } from "../../middlewares/validate.middleware.js";
 import { AttendanceValidation } from "./attendance.validation.js";
+import { AttendanceController } from "./attendance.controller.js";
+
 
 const router = express.Router();
 

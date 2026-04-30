@@ -2,16 +2,16 @@
   "name": "school-management-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch server.ts",
     "build": "tsc",
-    "start": "node dist/server.ts",
+    "start": "node dist/server.js",
     "postinstall": "prisma generate"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sharifa Akhter",
   "license": "ISC",
   "type": "module",
   "dependencies": {

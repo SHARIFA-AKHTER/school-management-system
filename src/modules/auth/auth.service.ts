@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import type { ILoginUserResponse, IRegisterUser } from './auth.interface.js';
-import { env } from '../../config/env.js';
+import { ILoginUserResponse, IRegisterUser } from './auth.interface.js';
 import { prisma } from '../../lib/prisma.js';
+import { env } from '../../config/env.js';
 
 const registerUser = async (payload: IRegisterUser): Promise<ILoginUserResponse> => {
   const isUserExist = await prisma.user.findUnique({

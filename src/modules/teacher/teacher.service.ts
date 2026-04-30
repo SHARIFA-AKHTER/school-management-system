@@ -1,5 +1,6 @@
-import { prisma } from '../../lib/prisma.js';
-import { ITeacher } from './teacher.interface.js';
+import { prisma } from "../../lib/prisma.js";
+import { ITeacher } from "./teacher.interface.js";
+
 
 const createTeacher = async (data: ITeacher) => {
   const result = await prisma.teacher.create({

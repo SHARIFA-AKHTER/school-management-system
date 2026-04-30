@@ -1,0 +1,1 @@
+{"version":3,"file":"attendance.interface.d.ts","sourceRoot":"","sources":["../../../src/modules/attendance/attendance.interface.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,WAAW;IAC1B,SAAS,EAAE,MAAM,CAAC;IAClB,IAAI,EAAE,MAAM,GAAG,IAAI,CAAC;IACpB,MAAM,EAAE,SAAS,GAAG,QAAQ,GAAG,MAAM,CAAC;CACvC"}

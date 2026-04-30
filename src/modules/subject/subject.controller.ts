@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import catchAsync from "../../utils/catchAsync";
-import { SubjectService } from "./subject.service";
+import catchAsync from "../../utils/catchAsync.js";
+import { SubjectService } from "./subject.service.js";
+
 
 const createSubject = catchAsync(async(req:Request, res:Response) =>{
     const result = await SubjectService.createSubject(req.body)
