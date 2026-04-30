@@ -29,7 +29,23 @@ const createAttendance = async (data: IAttendance) => {
   return result;
 };
 
-const getStudentAttendance = async (studentId: string) => {
+const getAllStudentAttendance = async () => {
+  const result = await prisma.attendance.findMany({
+    include: {
+      student: {
+        include: {
+          class: true, 
+        },
+      },
+    },
+    orderBy: {
+      date: 'desc',
+    },
+  });
+  return result;
+};
+
+const getStudentAttendanceId = async (studentId: string) => {
   return await prisma.attendance.findMany({
     where: { studentId },
     orderBy: { date: 'desc' },
@@ -38,5 +54,6 @@ const getStudentAttendance = async (studentId: string) => {
 
 export const AttendanceService = {
   createAttendance,
-  getStudentAttendance,
+  getStudentAttendanceId,
+  getAllStudentAttendance 
 };

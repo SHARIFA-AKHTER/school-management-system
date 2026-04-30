@@ -5,7 +5,7 @@
 
 generator client {
   provider = "prisma-client-js"
-   output   = "../generated/prisma"
+  //  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -29,6 +29,7 @@ model Student {
   classId   String
   userId    String?
   class     Class @relation(fields: [classId], references: [id])
+  attendances Attendance[]
 }
 
 model Teacher {
@@ -55,6 +56,7 @@ model Attendance {
   studentId String
   date      DateTime
   status    String
+  student   Student  @relation(fields: [studentId], references: [id])
 }
 
 model Result {

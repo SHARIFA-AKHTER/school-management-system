@@ -11,9 +11,23 @@ const createAttendance = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getStudentAttendance = catchAsync(async (req: Request, res: Response) => {
+
+const getAllStudentAttendance = catchAsync(async (req: Request, res: Response) => {
+  const result = await AttendanceService.getAllStudentAttendance();
+
+  res.status(200).json({
+    success: true,
+    message: 'All student attendance records fetched successfully',
+    meta: {
+        total: result.length 
+    },
+    data: result,
+  });
+});
+
+const getStudentAttendanceId = catchAsync(async (req: Request, res: Response) => {
   const studentId = req.params.studentId as string;
-  const result = await AttendanceService.getStudentAttendance(studentId);
+  const result = await AttendanceService.getStudentAttendanceId(studentId);
   res.status(200).json({
     success: true,
     message: 'Attendance fetched successfully',
@@ -23,5 +37,6 @@ const getStudentAttendance = catchAsync(async (req: Request, res: Response) => {
 
 export const AttendanceController = {
   createAttendance,
-  getStudentAttendance,
+  getStudentAttendanceId,
+  getAllStudentAttendance 
 };
