@@ -30,6 +30,7 @@ model Student {
   userId    String?
   class     Class @relation(fields: [classId], references: [id])
   attendances Attendance[]
+  results     Result[]
 }
 
 model Teacher {
@@ -62,6 +63,7 @@ model Attendance {
 model Result {
   id        String @id @default(uuid())
   studentId String
+  student   Student @relation(fields: [studentId], references: [id])
   subject   String
   marks     Int
 }

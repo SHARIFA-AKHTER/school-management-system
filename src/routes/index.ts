@@ -5,6 +5,7 @@ import { ClassRoutes } from "../modules/class/class.route";
 import { TeacherRoutes } from "../modules/teacher/teacher.route";
 import { SubjectRoutes } from "../modules/subject/subject.route";
 import { AttendanceRoutes } from "../modules/attendance/attendance.route";
+import { ResultRoutes } from "../modules/result/result.route";
 
 const router = Router();
 
@@ -33,6 +34,11 @@ const moduleRoutes = [
   {
     path: "/attendance",
     route: AttendanceRoutes,
+  },
+
+  {
+    path: "/results",
+    route: ResultRoutes,
   }
 ];
 
