@@ -1,19 +1,26 @@
 import { z } from 'zod';
 
-const createSubjectZodSchema = z.object({
+const createAttendanceZodSchema = z.object({
   body: z.object({
-    name: z
+    studentId: z
       .string()
       .trim()
-      .min(1, 'Subject name is required'),
+      .min(1, 'Student ID is required'),
 
-    classId: z
+    date: z
       .string()
       .trim()
-      .min(1, 'Class ID is required'),
+      .min(1, 'Date is required')
+      .refine((val) => !isNaN(Date.parse(val)), {
+        message: 'Invalid date format. Use YYYY-MM-DD',
+      }),
+
+    status: z.enum(['PRESENT', 'ABSENT', 'LATE'], {
+      message: 'Status is required',
+    }),
   }),
 });
 
-export const SubjectValidation = {
-  createSubjectZodSchema,
+export const AttendanceValidation = {
+  createAttendanceZodSchema,
 };

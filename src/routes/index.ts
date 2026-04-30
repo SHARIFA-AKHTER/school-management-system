@@ -4,6 +4,7 @@ import { StudentRoutes } from "../modules/student/student.route";
 import { ClassRoutes } from "../modules/class/class.route";
 import { TeacherRoutes } from "../modules/teacher/teacher.route";
 import { SubjectRoutes } from "../modules/subject/subject.route";
+import { AttendanceRoutes } from "../modules/attendance/attendance.route";
 
 const router = Router();
 
@@ -28,6 +29,11 @@ const moduleRoutes = [
     path: "/subjects",
     route: SubjectRoutes,
   },
+
+  {
+    path: "/attendance",
+    route: AttendanceRoutes,
+  }
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
