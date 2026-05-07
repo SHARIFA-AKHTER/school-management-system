@@ -61,8 +61,32 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateUser = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params as { id: string };
+  const result = await AuthService.updateUser(id, req.body);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "User updated successfully",
+    data: result,
+  });
+});
+
+const deleteUser = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params as { id: string };
+  await AuthService.deleteUser(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "User deleted successfully",
+    data: null,
+  });
+})
+
 export const AuthController = {
   register,
   login,
   getAllUsers,
+  updateUser, 
+  deleteUser,
 };

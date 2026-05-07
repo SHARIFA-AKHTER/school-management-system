@@ -1,10 +1,6 @@
 import express from 'express';
 import { AuthController } from './auth.controller.js';
 
-
-
-
-
 const router = express.Router();
 
 router.post(
@@ -24,4 +20,6 @@ router.get(
   AuthController.getAllUsers
 )
 
+router.patch('/users/:id', AuthController.updateUser);
+router.delete('/users/:id', AuthController.deleteUser);
 export const AuthRoutes = router;
