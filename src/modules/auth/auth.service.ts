@@ -74,6 +74,37 @@ const loginUser = async (payload: any): Promise<ILoginUserResponse> => {
   };
 };
 
+const googleLogin = async(payload: {email: string; name: string})=>{
+  let user = await prisma.user.findUnique({
+    where: { email: payload.email},
+  });
+  if(!user){
+    user = await prisma.user.create({
+      data: {
+        name: payload.name,
+        email: payload.email,
+        password: "",
+        role: "STUDENT"
+      },
+    });
+  }
+
+ const token = jwt.sign(
+   {userId: user.id, role: user.role},
+   env.jwt_secret!,
+   {expiresIn: '7d'}
+ )
+ return{
+  token,
+  user:{
+    id: user.id,
+    email: user.email,
+    role: user.role
+  },
+ };
+};
+
+
 const getAllUsers = async()=>{
   const users = await prisma.user.findMany({
     select: {
@@ -108,6 +139,7 @@ const deleteUser = async (id: string) => {
 export const AuthService = {
   registerUser,
   loginUser,
+  googleLogin,
   getAllUsers ,
   updateUser,
   deleteUser,

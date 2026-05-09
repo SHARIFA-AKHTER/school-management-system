@@ -50,6 +50,28 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const googleLogin = catchAsync(async (req: Request, res: Response) => {
+  const { email, name } = req.body;
+  const result = await AuthService.googleLogin({ email, name });
+
+  res.cookie("accessToken", result.token, {
+    secure: process.env.NODE_ENV === "production",
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  });
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User logged in Successfully with Google!',
+    data: {
+      accessToken: result.token,
+      user: result.user
+    },
+  });
+});
+
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.getAllUsers()
   // Implement logic to get all users
@@ -86,6 +108,7 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
 export const AuthController = {
   register,
   login,
+  googleLogin,
   getAllUsers,
   updateUser, 
   deleteUser,

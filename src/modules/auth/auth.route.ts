@@ -15,6 +15,11 @@ router.post(
   AuthController.login
 );
 
+router.post(
+  '/google-login',
+  AuthController.googleLogin
+);
+
 router.get(
   '/users',
   AuthController.getAllUsers
