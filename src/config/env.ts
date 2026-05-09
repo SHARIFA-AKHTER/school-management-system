@@ -10,4 +10,6 @@ export const env = {
   database_url: process.env.DATABASE_URL,
   jwt_secret: process.env.JWT_SECRET,
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS || 12,
+  google_client_id: process.env.GOOGLE_CLIENT_ID,
+  google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
 };

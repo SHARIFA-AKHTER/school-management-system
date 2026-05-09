@@ -51,8 +51,8 @@ const login = catchAsync(async (req: Request, res: Response) => {
 });
 
 const googleLogin = catchAsync(async (req: Request, res: Response) => {
-  const { email, name } = req.body;
-  const result = await AuthService.googleLogin({ email, name });
+  const {token} = req.body;
+  const result = await AuthService.googleLogin({ token });
 
   res.cookie("accessToken", result.token, {
     secure: process.env.NODE_ENV === "production",

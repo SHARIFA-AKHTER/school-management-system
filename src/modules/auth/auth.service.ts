@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { ILoginUserResponse, IRegisterUser } from './auth.interface.js';
 import { prisma } from '../../lib/prisma.js';
 import { env } from '../../config/env.js';
+import { OAuth2Client } from 'google-auth-library';
 
 const registerUser = async (payload: IRegisterUser): Promise<ILoginUserResponse> => {
   const isUserExist = await prisma.user.findUnique({
@@ -74,34 +75,60 @@ const loginUser = async (payload: any): Promise<ILoginUserResponse> => {
   };
 };
 
-const googleLogin = async(payload: {email: string; name: string})=>{
-  let user = await prisma.user.findUnique({
-    where: { email: payload.email},
-  });
-  if(!user){
-    user = await prisma.user.create({
-      data: {
-        name: payload.name,
-        email: payload.email,
-        password: "",
-        role: "STUDENT"
-      },
-    });
-  }
+const client = new OAuth2Client(env.google_client_id);
 
- const token = jwt.sign(
-   {userId: user.id, role: user.role},
-   env.jwt_secret!,
-   {expiresIn: '7d'}
- )
- return{
-  token,
-  user:{
-    id: user.id,
-    email: user.email,
-    role: user.role
-  },
- };
+const googleLogin = async (payload: { token: string }) => {
+  try {
+
+    const ticket = await client.verifyIdToken({
+      idToken: payload.token,
+      audience: env.google_client_id, 
+    });
+
+    const googlePayload = ticket.getPayload();
+
+    if (!googlePayload || !googlePayload.email) {
+      throw new Error("Invalid Google token: Email not found or verification failed!");
+    }
+
+    const { email, name } = googlePayload;
+
+
+    let user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          name: name || "Google User",
+          email: email,
+          password: "", 
+          role: "STUDENT", 
+        },
+      });
+    }
+
+    const accessToken = jwt.sign(
+      { userId: user.id, role: user.role },
+      env.jwt_secret!,
+      { expiresIn: '7d' }
+    );
+
+ 
+    return {
+      token: accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        name: user.name,
+      },
+    };
+  } catch (error: any) {
+    console.error("Google Authentication Error:", error.message);
+    throw new Error("Google identity verification failed. Please try again.");
+  }
 };
 
 
