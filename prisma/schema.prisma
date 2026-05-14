@@ -10,50 +10,52 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-
 }
 
 model User {
-  id        String @id @default(uuid())
-  name      String
-  email     String @unique
-  password  String
-  role      Role
-  createdAt DateTime @default(now())
+  id                 String   @id @default(uuid())
+  name               String
+  email              String   @unique
+  password           String
+  role               Role
+  createdAt          DateTime @default(now())
   needPasswordChange Boolean  @default(true)
 }
 
 model Student {
-  id        String @id @default(uuid())
-  name      String
-  classId   String
-  userId    String?
-  class     Class @relation(fields: [classId], references: [id])
+  id          String       @id @default(uuid())
+  name        String
+  classId     String
+  userId      String?
+  class       Class        @relation(fields: [classId], references: [id])
   attendances Attendance[]
   results     Result[]
+  payments    Payment[]
+  performance PerformanceAI?
+
 }
 
 model Teacher {
-  id     String @id @default(uuid())
-  name   String
+  id   String @id @default(uuid())
+  name String
 }
 
 model Class {
-  id       String @id @default(uuid())
+  id       String    @id @default(uuid())
   name     String
   students Student[]
   subjects Subject[]
 }
 
 model Subject {
-  id      String  @id @default(cuid())
+  id      String @id @default(cuid())
   name    String
   classId String
-  class   Class   @relation(fields: [classId], references: [id])
+  class   Class  @relation(fields: [classId], references: [id])
 }
 
 model Attendance {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   studentId String
   date      DateTime
   status    String
@@ -61,12 +63,52 @@ model Attendance {
 }
 
 model Result {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   studentId String
   student   Student @relation(fields: [studentId], references: [id])
   subject   String
   marks     Int
+  exam      Exam?   @relation(fields: [examId], references: [id])
+  examId    String?
 }
+
+model Payment {
+  id            String   @id @default(uuid())
+  amount        Float
+  status        String
+  transactionId String   @unique
+  purpose       String
+  studentId     String
+  student       Student  @relation(fields: [studentId], references: [id])
+  paymentDate   DateTime @default(now())
+}
+
+model Exam {
+  id        String   @id @default(uuid())
+  title     String
+  examDate  DateTime
+  feeAmount Float    @default(0.0)
+  results   Result[]
+}
+
+model PerformanceAI {
+  id          String   @id @default(uuid())
+  studentId   String   @unique
+  student     Student  @relation(fields: [studentId], references: [id])
+  insightText String  
+  predictedGrade String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
 
 enum Role {
   ADMIN
